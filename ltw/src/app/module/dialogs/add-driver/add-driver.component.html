@@ -1,0 +1,92 @@
+<div class="container">
+    <h1 mat-dialog-title>Thêm tài xế</h1>
+
+    <div mat-dialog-content>
+        <form [formGroup]="formControl">
+            <!-- <div class="form">
+        <mat-form-field class="fullWidth" appearance="outline">
+          <mat-label>ID</mat-label>
+          <input matInput type="text" formControlName="id" readonly>
+        </mat-form-field>
+      </div> -->
+
+            <div class="form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Họ tên </mat-label>
+                    <input matInput type="text" formControlName="name" />
+                    <mat-error *ngIf="
+          formControl.controls['name']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Số thẻ căn cước </mat-label>
+                    <input matInput type="text" formControlName="idCard" />
+                    <mat-error *ngIf="
+          formControl.controls['idCard']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Mã số bằng lái </mat-label>
+                    <input matInput type="text" formControlName="drivingLicenseCode" />
+                    <mat-error *ngIf="
+          formControl.controls['drivingLicenseCode']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Loại bằng lái </mat-label>
+                    <input matInput type="text" formControlName="typeOfLicense" />
+                    <mat-error *ngIf="
+          formControl.controls['typeOfLicense']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Địa chỉ </mat-label>
+                    <input matInput type="text" formControlName="address" />
+                    <mat-error *ngIf="
+          formControl.controls['address']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Ngày sinh </mat-label>
+                    <input matInput type="date" formControlName="birthday" />
+                    <mat-error *ngIf="
+          formControl.controls['birthday']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Thâm niên </mat-label>
+                    <input matInput type="number" formControlName="experience" />
+                    <mat-error *ngIf="
+          formControl.controls['experience']?.errors">Thâm niên là kiểu số</mat-error>
+                    <mat-error *ngIf="
+          formControl.controls['experience']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Bậc lương</mat-label>
+                    <mat-select formControlName='fixedSalary'>
+                        <mat-option *ngFor="let fixedSalary of data.fixedSalaryData" [value]="fixedSalary">Mã {{fixedSalary.id}} bậc lương {{fixedSalary.grade}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="
+          formControl.controls['fixedSalary']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-2" mat-dialog-actions>
+        <button mat-raised-button color="primary" [disabled]="!formControl.valid" (click)="save()" cdkFocusInitial>Yes</button>
+        <button mat-raised-button mat-dialog-close>No</button>
+
+    </div>
+</div>

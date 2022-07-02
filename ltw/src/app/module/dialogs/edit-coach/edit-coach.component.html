@@ -1,0 +1,79 @@
+<div class="container">
+    <h1 mat-dialog-title>Cập nhật xe khách</h1>
+
+    <div mat-dialog-content>
+        <form [formGroup]="formControl">
+            <div class="form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>ID</mat-label>
+                    <input matInput type="text" formControlName="id" [(ngModel)]="data.id" readonly>
+                </mat-form-field>
+            </div>
+
+            <div class="form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Biển số </mat-label>
+                    <input matInput type="text" formControlName="plate" [(ngModel)]="data.plate" />
+                    <mat-error *ngIf="
+            formControl.controls['plate']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Mẫu xe </mat-label>
+                    <input matInput type="text" formControlName="model" [(ngModel)]="data.model" />
+                    <mat-error *ngIf="
+            formControl.controls['model']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Hãng sản xuất </mat-label>
+                    <input matInput type="text" formControlName="manufacturer" [(ngModel)]="data.manufacturer" />
+                    <mat-error *ngIf="
+              formControl.controls['manufacturer']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Số ghế </mat-label>
+                    <input matInput type="number" formControlName="capacity" [(ngModel)]="data.capacity" />
+                    <mat-error *ngIf="
+            formControl.controls['capacity']?.errors">Số ghế là kiểu số</mat-error>
+                    <mat-error *ngIf="
+            formControl.controls['capacity']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Số năm sử dụng </mat-label>
+                    <input matInput type="number" formControlName="yearsOfUse" [(ngModel)]="data.yearsOfUse" />
+                    <mat-error *ngIf="
+              formControl.controls['yearsOfUse']?.errors">Số năm sử dụng là kiểu số</mat-error>
+                    <mat-error *ngIf="
+              formControl.controls['yearsOfUse']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Ngày bảo dưỡng cuối cùng </mat-label>
+                    <input matInput type="date" formControlName="lastMaintenanceDay" [(ngModel)]="data.lastMaintenanceDay" />
+                    <mat-error *ngIf="
+      formControl.controls['lastMaintenanceDay']?.errors">Định dạng ngày yyyy-mm-dd</mat-error>
+                    <mat-error *ngIf="
+      formControl.controls['lastMaintenanceDay']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-2" mat-dialog-actions>
+        <button mat-raised-button color="primary" [disabled]="!formControl.valid" (click)="edit()" cdkFocusInitial>Yes</button>
+        <button mat-raised-button mat-dialog-close>No</button>
+
+    </div>
+</div>

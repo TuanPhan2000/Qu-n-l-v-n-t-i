@@ -1,0 +1,61 @@
+<div class="container">
+    <h1 mat-dialog-title>Thêm tuyến xe</h1>
+
+    <div mat-dialog-content>
+        <form [formGroup]="formControl">
+            <!-- <div class="form">
+        <mat-form-field class="fullWidth" appearance="outline">
+          <mat-label>ID</mat-label>
+          <input matInput type="text" formControlName="id" readonly>
+        </mat-form-field>
+      </div> -->
+
+            <div class="form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Điểm bắt đầu</mat-label>
+                    <input matInput type="text" formControlName="pointOfDeparture" />
+                    <mat-error *ngIf="
+          formControl.controls['pointOfDeparture']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Điểm kết thúc</mat-label>
+                    <input matInput type="text" formControlName="destination" />
+                    <mat-error *ngIf="
+          formControl.controls['destination']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Độ dài</mat-label>
+                    <input matInput type="number" formControlName="length" />
+                    <mat-error *ngIf="
+          formControl.controls['length']?.errors">Độ dài là kiểu số</mat-error>
+                    <mat-error *ngIf="
+          formControl.controls['length']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="mt-2 form">
+                <mat-form-field class="fullWidth" appearance="outline">
+                    <mat-label>Độ phức tạp</mat-label>
+                    <mat-select formControlName='complexity'>
+                      <mat-option *ngFor="let complexity of data" [value]="complexity.complexity">{{complexity.complexity}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="
+          formControl.controls['complexity']?.errors?.required">field required</mat-error>
+                </mat-form-field>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-2" mat-dialog-actions>
+        <button mat-raised-button color="primary" [disabled]="!formControl.valid" (click)="save()" cdkFocusInitial>Yes</button>
+        <button mat-raised-button mat-dialog-close>No</button>
+
+    </div>
+</div>

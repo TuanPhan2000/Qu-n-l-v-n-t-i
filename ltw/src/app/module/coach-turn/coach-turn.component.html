@@ -1,0 +1,147 @@
+
+<main class="content-wrapper">
+  <div class="container p-30">
+    <div class="task-list mb-3"><h1>Quản lý chuyến xe</h1></div>
+    <!-- <div class="row"> -->
+      <!-- <div class="container"> -->
+
+        <div class="search-input">
+          <div class="row">
+            <div class="col-12 search-group">
+              <form [formGroup]="formSearch">
+                <mat-form-field appearance="fill">
+                  <mat-label>Giá vé tối thiểu</mat-label>
+                  <input type="number" matInput formControlName='ticketPriceMin' />
+                  <!-- <mat-error *ngIf="
+                  formSearch.controls['length']?.errors">Độ dài là kiểu số</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Tên tài xế</mat-label>
+                  <input matInput formControlName='driverName'/>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Biển xe khách</mat-label>
+                  <input matInput formControlName='coachPlate'/>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Id tuyến xe</mat-label>
+                  <input type="number" formControlName='routeId' matInput/>
+                  <!-- <mat-error *ngIf="
+                  formSearch.controls['length']?.errors">Độ dài là kiểu số</mat-error> -->
+                </mat-form-field>
+                <button class="btn btn-primary b-search ml-3" (click)="onSearch()">Search</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button type="button" class="btn btn-success" (click)="openAddDialog()">Thêm chuyến xe mới</button>
+          <button type="button" class="btn btn-primary ml-4" (click)="all()">Tất cả chuyến xe</button>
+        </div>
+
+        <div class="col-md-12 main-datatable mt-5">
+          <div class="card_body">
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="no">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <td mat-cell *matCellDef="let element,index as i"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> Id </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="passengerAmount">
+                  <th mat-header-cell *matHeaderCellDef> Số khách </th>
+                  <td mat-cell *matCellDef="let element"> {{element.passengerAmount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ticketPrice">
+                  <th mat-header-cell *matHeaderCellDef> Giá vé </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ticketPrice | currency:'VND'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="startTime">
+                  <th mat-header-cell *matHeaderCellDef> Thời gian bắt đầu </th>
+                  <td mat-cell *matCellDef="let element">
+                    <!-- {{element.endTime}} -->
+
+                    <input matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose a date & time" [(ngModel)]="element.startTime" readonly>
+
+                    <!-- <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle> -->
+
+                    <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="endTime">
+                  <th mat-header-cell *matHeaderCellDef> Thời gian kết thúc </th>
+                  <td mat-cell *matCellDef="let element">
+                    <!-- {{element.endTime}} -->
+
+                    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date & time" [(ngModel)]="element.endTime" readonly>
+
+                    <!-- <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle> -->
+
+                    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+                  </td>
+                </ng-container>
+
+<!--                <ng-container matColumnDef="gradeSalary">-->
+<!--                  <th mat-header-cell *matHeaderCellDef> Hệ số lương </th>-->
+<!--                  <td mat-cell *matCellDef="let element"> {{element.gradeSalary}} </td>-->
+<!--                </ng-container>-->
+
+                <ng-container matColumnDef="coach">
+                  <th mat-header-cell *matHeaderCellDef> Xe khách </th>
+                  <td mat-cell *matCellDef="let element"> {{element.coach.id+"|Biển: "+element.coach.plate+" |Số ghế: "+element.coach.capacity}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="route">
+                  <th mat-header-cell *matHeaderCellDef> Tuyến đường </th>
+                  <td mat-cell *matCellDef="let element"> {{element.route.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="driver">
+                  <th mat-header-cell *matHeaderCellDef> Tài xế </th>
+                  <td mat-cell *matCellDef="let element"> {{element.driver.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="driverAsistant">
+                  <th mat-header-cell *matHeaderCellDef> Phụ xe </th>
+                  <td mat-cell *matCellDef="let element"> {{element.driverAsistant.name}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> </th>
+                  <td mat-cell *matCellDef="let element, index as i">
+                    <button mat-icon-button color="primary" (click)="openEditDialog(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="confirmDialog(element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  <!-- </div> -->
+</main>

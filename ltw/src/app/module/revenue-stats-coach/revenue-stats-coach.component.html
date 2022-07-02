@@ -1,0 +1,111 @@
+<main class="content-wrapper">
+  <div class="container p-30">
+    <div class="task-list mb-3">
+      <h1>Thống kê doanh thu xe khách</h1>
+    </div>
+    <!-- <div class="row"> -->
+    <!-- <div class="container"> -->
+
+    <div class="search-input">
+      <div class="row">
+        <div class="col-12 search-group">
+          <form [formGroup]="formSearch">
+            <mat-form-field class="fullWidth" appearance="outline">
+              <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a start time"
+                formControlName="startTime">
+              <mat-datepicker-toggle matSuffix [for]="$any(picker1)"></mat-datepicker-toggle>
+              <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
+              <mat-error *ngIf="
+                  formSearch.controls['startTime']?.errors?.required">field required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="fullWidth" appearance="outline">
+              <input matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose a end time"
+                formControlName="endTime">
+              <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
+              <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
+              <mat-error *ngIf="
+                formSearch.controls['endTime']?.errors?.required">field required</mat-error>
+            </mat-form-field>
+            <button class="btn btn-primary b-search ml-3" [disabled]="!formSearch.valid" (click)="onSearch()">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 main-datatable mt-5">
+      <div class="card_body">
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+            <!-- Position Column -->
+            <ng-container matColumnDef="no">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element,index as i"> {{i+1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="plate">
+              <th mat-header-cell *matHeaderCellDef> Biển số </th>
+              <td mat-cell *matCellDef="let element"> {{element.plate}} </td>
+            </ng-container>
+
+            <!-- cmt Column -->
+            <ng-container matColumnDef="model">
+              <th mat-header-cell *matHeaderCellDef> Model </th>
+              <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="manufacturer">
+              <th mat-header-cell *matHeaderCellDef> Hãng </th>
+              <td mat-cell *matCellDef="let element"> {{element.manufacturer}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="capacity">
+              <th mat-header-cell *matHeaderCellDef> Số ghế </th>
+              <td mat-cell *matCellDef="let element"> {{element.capacity}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="years_of_use">
+              <th mat-header-cell *matHeaderCellDef> Số năm sử dụng </th>
+              <td mat-cell *matCellDef="let element"> {{element.years_of_use}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="last_maintenance_day">
+              <th mat-header-cell *matHeaderCellDef> Ngày bảo dưỡng cuối </th>
+              <td mat-cell *matCellDef="let element"> {{element.last_maintenance_day}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="revenue">
+              <th mat-header-cell *matHeaderCellDef> Doanh thu </th>
+              <td mat-cell *matCellDef="let element"> {{element.revenue | currency:'VND'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element, index as i">
+                <button mat-icon-button color="primary" (click)="openView(element.id)">
+                  <mat-icon>assignment</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+  <!-- </div> -->
+</main>

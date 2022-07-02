@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+}
+
+  table,th.mat-header-cell{
+    text-align: center;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-width: 850px;
+  }
+
+  .container>* {
+    width: 100%;
+  }
+
+  .mat-dialog-actions { background-color: transparent!important; }

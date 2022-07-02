@@ -1,0 +1,127 @@
+
+<main class="content-wrapper">
+  <div class="container p-30">
+    <div class="task-list mb-3"><h1>Quản lý xe khách</h1></div>
+    <!-- <div class="row"> -->
+      <!-- <div class="container"> -->
+
+        <div class="search-input">
+          <div class="row">
+            <div class="col-12 search-group">
+              <form [formGroup]="formSearch">
+                <mat-form-field appearance="fill">
+                  <mat-label>ID</mat-label>
+                  <input type="number" matInput formControlName='id'>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Biển số</mat-label>
+                  <input type="text" matInput formControlName='plate'>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Mẫu xe</mat-label>
+                  <input type="text" matInput formControlName='model'>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Hãng sản xuất</mat-label>
+                  <input type="text" matInput formControlName='manufacturer'>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Số ghế tối thiểu</mat-label>
+                  <input type="number" matInput formControlName='capacity'>
+                  <mat-error *ngIf="
+                  formSearch.controls['capacity']?.errors">Số ghế là kiểu số</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Số năm sử dụng tối đa</mat-label>
+                  <input type="number" matInput formControlName='yearsOfUse'>
+                  <mat-error *ngIf="
+                  formSearch.controls['yearsOfUse']?.errors">Số năm sử dụng là kiểu số</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Ngày bảo dưỡng gần nhất</mat-label>
+                  <input type="date" matInput formControlName='lastMaintenanceDay'>
+                </mat-form-field>
+                <button class="btn btn-primary b-search ml-3" (click)="onSearch()">Search</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button type="button" class="btn btn-success" (click)="openAddDialog()">Thêm xe khách mới</button>
+          <button type="button" class="btn btn-primary ml-4" (click)="all()" >Tất cả xe</button>
+        </div>
+
+        <div class="col-md-12 main-datatable mt-5">
+          <div class="card_body">
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="no">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <td mat-cell *matCellDef="let element,index as i"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> Id </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="plate">
+                  <th mat-header-cell *matHeaderCellDef> Biển số </th>
+                  <td mat-cell *matCellDef="let element"> {{element.plate}} </td>
+                </ng-container>
+
+                <!-- cmt Column -->
+                <ng-container matColumnDef="model">
+                  <th mat-header-cell *matHeaderCellDef> Mẫu xe </th>
+                  <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="manufacturer">
+                  <th mat-header-cell *matHeaderCellDef> Hãng sản xuất </th>
+                  <td mat-cell *matCellDef="let element"> {{element.manufacturer}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="capacity">
+                  <th mat-header-cell *matHeaderCellDef> Số ghế </th>
+                  <td mat-cell *matCellDef="let element"> {{element.capacity}} </td>
+                </ng-container>
+                <ng-container matColumnDef="yearsOfUse">
+                  <th mat-header-cell *matHeaderCellDef> Số năm sử dụng </th>
+                  <td mat-cell *matCellDef="let element"> {{element.yearsOfUse}} </td>
+                </ng-container>
+                <ng-container matColumnDef="lastMaintenanceDay">
+                  <th mat-header-cell *matHeaderCellDef> Ngày bảo dưỡng cuối cùng </th>
+                  <td mat-cell *matCellDef="let element"> {{element.lastMaintenanceDay}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> </th>
+                  <td mat-cell *matCellDef="let element, index as i">
+                    <button mat-icon-button color="primary" (click)="openEditDialog(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="confirmDialog(element)" >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  <!-- </div> -->
+</main>

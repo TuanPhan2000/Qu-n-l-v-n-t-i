@@ -1,0 +1,36 @@
+<div  [ngClass]="{'dashboard-hide': !check, 'dashboard': check}">
+
+  <div class="dashboard-nav" *ngIf="check">
+    <header><a href="#" class="menu-toggle"><i class="fas fa-bars"></i></a><a routerLink="home"
+        routerLinkActive="active" class="brand-logo"><i class="fas fa-home"></i><span>Quản lý vận tải</span></a></header>
+    <nav class="dashboard-nav-list">
+      <a routerLink="driver" routerLinkActive="active" class="dashboard-nav-item"><i class="far fa-id-card"></i>Quản lý tài
+        xế </a>
+      <a routerLink="coach" routerLinkActive="active" class="dashboard-nav-item"><i class="fas fa-bus"></i>Quản lý xe khách</a>
+      <a routerLink="route" routerLinkActive="active" class="dashboard-nav-item"><i class="fas fa-route"></i> Quản
+        lý tuyến xe </a>
+
+      <a routerLink="coach-turn" routerLinkActive="active" class="dashboard-nav-item"><i class="fas fa-directions"></i> Quản
+        lý chuyến xe </a>
+      <a routerLink="revenue-stats-coach" routerLinkActive="active" class="dashboard-nav-item"><i class="fas fa-chart-bar"></i> Thống kê doanh thu xe </a>
+      <a routerLink="salary" routerLinkActive="active" class="dashboard-nav-item"><i class="fas fa-money-bill-wave"></i> Bảng lương </a>
+      <!-- <div class="nav-item-divider"></div> -->
+    </nav>
+  </div>
+
+  <div [ngClass]="{'dashboard-app-hide': !check, 'dashboard-app': check}">
+    <header class='dashboard-toolbar' *ngIf="check">
+      <a href="#!" class="menu-toggle">
+        <i class="fas fa-bars"></i></a>
+      <div class="btn-group" style="margin-left: auto;">
+        <button type="button" class="btn btn-primary mr-3" routerLink="account" routerLinkActive="active">Account</button>
+        <button type="button" class="btn btn-primary" (click)="logOut()">Logout</button>
+      </div>
+    </header>
+    <div [ngClass]="{'dashboard-content-hide': !check, 'dashboard-content': check}">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</div>
+

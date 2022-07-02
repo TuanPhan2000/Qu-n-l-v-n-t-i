@@ -1,0 +1,151 @@
+<main class="content-wrapper">
+    <div class="container p-30">
+        <div class="task-list mb-3">
+            <h1>Quản lý tài xế</h1>
+        </div>
+        <!-- <div class="row"> -->
+        <!-- <div class="container"> -->
+
+        <div class="search-input">
+            <div class="row">
+                <div class="col-12 search-group">
+                    <form [formGroup]="formSearch">
+                        <mat-form-field appearance="fill">
+                            <mat-label>ID</mat-label>
+                            <input type="number" matInput formControlName='id'>
+                            <mat-error *ngIf="
+                  formSearch.controls['id']?.errors">ID là kiểu số</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Họ tên</mat-label>
+                            <input matInput formControlName='name'>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Số thẻ căn cước</mat-label>
+                            <input matInput formControlName='idCard'>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Mã số bằng lái</mat-label>
+                            <input matInput formControlName='drivingLicenseCode'>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Loại bằng lái</mat-label>
+                            <input matInput formControlName='typeOfLicense'>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Địa chỉ</mat-label>
+                            <input matInput formControlName='address'>
+                        </mat-form-field>
+                        <mat-form-field class="fullWidth" appearance="outline">
+                            <mat-label>Ngày sinh </mat-label>
+                            <input matInput type="date" formControlName="birthday" />
+                            <mat-error *ngIf="
+                          formSearch.controls['birthday']?.errors?.required">field required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Thâm niên</mat-label>
+                            <input type="number" matInput formControlName='experience'>
+                            <mat-error *ngIf="
+                  formSearch.controls['experience']?.errors">Thâm niên là kiểu số</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Bậc lương</mat-label>
+                            <mat-select formControlName='grade'>
+                                <mat-option value="">All</mat-option>
+                                <mat-option *ngFor="let e of fixedSalaryList" [value]="e.grade">Mã {{e.id}} bậc lương {{e.grade}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button class="btn btn-primary b-search ml-3" (click)="onSearch()">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button type="button" class="btn btn-success" (click)="openAddDialog()">Thêm tài xế mới</button>
+            <button type="button" class="btn btn-primary ml-4" (click)="all()">Tất cả tài xế</button>
+        </div>
+
+        <div class="col-md-12 main-datatable mt-5">
+            <div class="card_body">
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="no">
+                            <th mat-header-cell *matHeaderCellDef> No. </th>
+                            <td mat-cell *matCellDef="let element,index as i"> {{i+1}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> Id </th>
+                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Họ tên </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <!-- cmt Column -->
+                        <ng-container matColumnDef="idCard">
+                            <th mat-header-cell *matHeaderCellDef> Số thẻ căn cước </th>
+                            <td mat-cell *matCellDef="let element"> {{element.idCard}} </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="drivingLicenseCode">
+                            <th mat-header-cell *matHeaderCellDef> Mã số bằng lái </th>
+                            <td mat-cell *matCellDef="let element"> {{element.drivingLicenseCode}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="typeOfLicense">
+                            <th mat-header-cell *matHeaderCellDef> Loại bằng lái </th>
+                            <td mat-cell *matCellDef="let element"> {{element.typeOfLicense}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="address">
+                            <th mat-header-cell *matHeaderCellDef> Địa chỉ </th>
+                            <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="birthday">
+                            <th mat-header-cell *matHeaderCellDef> Ngày sinh </th>
+                            <td mat-cell *matCellDef="let element"> {{element.birthday}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="experience">
+                            <th mat-header-cell *matHeaderCellDef> Thâm niên </th>
+                            <td mat-cell *matCellDef="let element"> {{element.experience}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fixedSalary">
+                            <th mat-header-cell *matHeaderCellDef> Bậc lương </th>
+                            <td mat-cell *matCellDef="let element"> {{element.fixedSalary.grade}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element, index as i">
+                                <button mat-icon-button color="primary" (click)="openEditDialog(element)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                                <button mat-icon-button color="warn" (click)="confirmDialog(element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,148 @@
+<div class="container">
+  <h1 mat-dialog-title>Thêm chuyến xe</h1>
+
+  <div mat-dialog-content>
+    <form [formGroup]="formControl">
+      <!--      <div class="form">-->
+      <!--        <mat-form-field class="fullWidth" appearance="outline">-->
+      <!--          <mat-label>ID</mat-label>-->
+      <!--          <input matInput type="text" formControlName="id" />-->
+      <!--        </mat-form-field>-->
+      <!--      </div>-->
+
+      <div class="form">
+        <mat-form-field class="fullWidth" appearance="outline">
+          <mat-label>Số hành khách</mat-label>
+          <input matInput type="number" formControlName="passengerAmount"/>
+          <mat-error *ngIf="
+          formControl.controls['passengerAmount']?.errors?.required">field required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mt-2 form">
+        <mat-form-field class="fullWidth" appearance="outline">
+          <mat-label>Gía vé</mat-label>
+          <input matInput type="number" formControlName="ticketPrice"/>
+          <mat-error *ngIf="
+          formControl.controls['ticketPrice']?.errors?.required">field required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mt-2 form">
+<!--        <mat-form-field class="fullWidth" appearance="outline">-->
+<!--          <mat-label>Thời gian bắt đầu *</mat-label>-->
+<!--          <input matInput type="text" formControlName="startTime"/>-->
+<!--          <mat-error *ngIf="-->
+<!--          formControl.controls['startTime']?.errors?.required">field required-->
+<!--          </mat-error>-->
+<!--        </mat-form-field>-->
+        <mat-form-field class="fullWidth" appearance="outline">
+          <input matInput [ngxMatDatetimePicker]="picker2" [(ngModel)]="dateStart" placeholder="Choose a date & time"
+                formControlName="startTime">
+
+          <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
+
+          <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
+          <mat-error *ngIf="
+          formControl.controls['startTime']?.errors?.required">field required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mt-2 form">
+<!--        <mat-form-field class="fullWidth" appearance="outline">-->
+<!--          <mat-label>Thời gian kết thúc *</mat-label>-->
+<!--          <input matInput type="text" formControlName="endTime"/>-->
+<!--          <mat-error *ngIf="-->
+<!--          formControl.controls['endTime']?.errors?.required">field required-->
+<!--          </mat-error>-->
+<!--        </mat-form-field>-->
+        <mat-form-field class="fullWidth" appearance="outline">
+          <input matInput [ngxMatDatetimePicker]="picker" [(ngModel)]="dateEnd" placeholder="Choose a date & time"
+                  formControlName="endTime">
+
+          <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+
+          <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+          <mat-error *ngIf="
+          formControl.controls['endTime']?.errors?.required">field required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+<!--      <div class="mt-2 form">-->
+<!--        <mat-form-field class="fullWidth" appearance="outline">-->
+<!--          <mat-label>Hệ số lương *</mat-label>-->
+<!--          <input matInput type="text" formControlName="gradeSalary"/>-->
+<!--          <mat-error *ngIf="-->
+<!--          formControl.controls['gradeSalary']?.errors?.required">field required-->
+<!--          </mat-error>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+
+      <div class="mt-2 form">
+        <mat-form-field class="fullWidth" appearance="outline">
+          <mat-label>Xe khách</mat-label>
+          <mat-select formControlName='coach'>
+            <mat-option *ngFor="let coach of data.coachData"
+                        [value]="coach">{{coach.id + "|Biển: " + coach.plate}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="
+          formControl.controls['coach']?.errors?.required">field required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mt-2 form">
+        <mat-form-field class="fullWidth" appearance="outline">
+          <mat-label>Tuyến xe</mat-label>
+          <mat-select formControlName='route'>
+            <mat-option *ngFor="let route of data.routeData"
+                        [value]="route">{{route.id + "|Độ phức tạp : " + route.complexity}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="
+          formControl.controls['route']?.errors?.required">field required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mt-2 form">
+        <mat-form-field class="fullWidth" appearance="outline">
+          <mat-label>Lái xe</mat-label>
+          <mat-select formControlName='driver'>
+            <mat-option *ngFor="let driver of data.driverData"
+                        [value]="driver">{{driver.id + "|Tên: " + driver.name + "|Thâm niên: " + driver.experience}}</mat-option>
+
+          </mat-select>
+          <mat-error *ngIf="
+          formControl.controls['driver']?.errors?.required">field required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="mt-2 form">
+        <mat-form-field class="fullWidth" appearance="outline">
+          <mat-label>Phụ xe</mat-label>
+          <mat-select formControlName='driverAsistant'>
+            <mat-option *ngFor="let driver of data.driverData"
+                        [value]="driver">{{driver.id + "|Tên: " + driver.name + "|Thâm niên: " + driver.experience}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="
+          formControl.controls['driverAsistant']?.errors?.required">field required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="mt-2" mat-dialog-actions>
+    <button mat-raised-button color="primary" [disabled]="!formControl.valid" (click)="save()"
+            cdkFocusInitial>Yes
+    </button>
+    <button mat-raised-button mat-dialog-close>No</button>
+
+  </div>
+</div>
